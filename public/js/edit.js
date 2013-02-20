@@ -427,6 +427,7 @@ function edit(id, isnew){
     init();
 }
 
+
 function init(){
     
     /*再生ヘッド　全体を行き来する*/
@@ -503,7 +504,7 @@ function init(){
     
     createScore();
     createSavedScore();
-    prepareSound();
+    //prepareSound();
     //loadRecordAnim();
 }
 
@@ -747,6 +748,8 @@ function soundPrepared(e){
     Sounds[5] = createjs.SoundJS.play("bass");
     Sounds[6] = createjs.SoundJS.play("snare");
     Sounds[7] = createjs.SoundJS.play("stick");
+    
+    /*ここですべての準備が完了した　ローディングレイヤーを除去する*/
 }
 
 /**/

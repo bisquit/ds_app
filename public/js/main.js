@@ -26,6 +26,7 @@ function(query,dom,baseFx,fx,easing,on,win,JSON){
         drumContainer.style.opacity = 0;
         snipet.style.opacity = 0;
         
+        prepareSound();
         
         /*canvas及びlocalstorageのサポートで分岐*/
         /*storageにデータがあれば表示*/
