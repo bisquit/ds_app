@@ -31,12 +31,10 @@ function(query,dom,baseFx,fx,easing,on,win,JSON){
         /*canvas及びlocalstorageのサポートで分岐*/
         /*storageにデータがあれば表示*/
         if(isCanvasSupported){
-            console.log("canvas availlable");
             
             getStorageAndUpdate();
             
         }else{
-            console.log("not suppot canvas");
         }
         
         /*addScore*/    
@@ -51,9 +49,7 @@ function(query,dom,baseFx,fx,easing,on,win,JSON){
                 Scores = localStorage.getItem("Scores")? localStorage.getItem("Scores") : [];
                 if(!(typeof Scores == "object"))
                     Scores = JSON.parse(Scores);
-                console.log(Scores);
             }catch(e){
-                console.log(e);
             }
             libUpdate();
         }
@@ -202,7 +198,6 @@ function(query,dom,baseFx,fx,easing,on,win,JSON){
                     domAttr.set("libCanvas","height",1);
                 }
                 
-                console.log(libCanvas);
                 /*こちらも最初の一回のみ上が実行される*/
                 if(!libStage){
                     libStage = new createjs.Stage(libCanvas);
@@ -212,7 +207,6 @@ function(query,dom,baseFx,fx,easing,on,win,JSON){
                 }
                     
                 libStage.enableMouseOver();//高負荷なのですぐに解除する;
-                console.log("libStage was created");
                 
                 /*一旦すべて削除する*/
                 libStage.removeAllChildren();
@@ -297,7 +291,6 @@ function(query,dom,baseFx,fx,easing,on,win,JSON){
                             libStage.addChild(deleteBtn);
                             /*デリート処理*/
                             deleteBtn.onClick = function(e){
-                                console.log(Scores);
                                 for(var s=0; s<Scores.length; s++){
                                     if(Scores[s][0].id == id){
                                         Scores.splice(s,1);

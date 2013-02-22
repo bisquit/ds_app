@@ -24,7 +24,6 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
     
     /*スコアが追加されると呼ばれる
     var scoreHandle = resultScore.observe(function(object,removedFrom,insertedInto){
-        console.log(object);
         noteMemory = new Observable(new Memory({data:object.Note, idProperty:object.id}));
         var resultNote = noteMemory.query();
     });*/
@@ -662,11 +661,9 @@ function createNote(e){
     stage.update();
     
     saveNotes();
-    console.log("createNote");
 };
 
 function createSavedScore(){
-    console.log(thisId);
     if(Scores[thisId] == undefined){
         Scores[thisId] = {};
         titleDom.value = "No Title";
@@ -676,7 +673,6 @@ function createSavedScore(){
         
         /*セーブされているノートを作成*/
         var noteData = Scores[thisId].slice(1);//info(1番目)を除く
-        console.log(noteData);
         for(var i=noteData.length-1; i>=0; i--){
             var aNote = noteData[i];//一つノート(x,y,ctx)
             
@@ -776,7 +772,6 @@ function addScore(targetScore){
         if(targetScore != undefined){
             /*idは個数目*/
             var id = targetScore.target.id.slice(3);
-            console.log("id:"+id+",length:"+scoreLength);
             AllScores[scoreLength-1].y += 120*(id);
             
             
@@ -812,7 +807,6 @@ function removeScore(targetScore){
         /*var optionsList = query(".option_area");
         domConst.destroy(optionsList[id-1]);
         AllOptions.splice(id-1,1);
-        console.log(AllOptions);*/
         var optionsList = query(".option_area");
         domConst.destroy(optionsList[AllOptions.length-1]);
         AllOptions.splice(AllOptions.length-1,1);
@@ -1084,15 +1078,12 @@ function saveNotes(){
                  for(s=0; s<Scores.length; s++){
                     if(Scores[s][0].id == thisId){
                         Scores.splice(s,1,storingNote);
-                        console.log("thisId is "+thisId);
                         break;
                     }
                 }
             }
-            console.log(Scores);
             Scores = JSON.stringify(Scores);
             localStorage.setItem("Scores",Scores);
-            console.log("save complete");
         }
     });
     
