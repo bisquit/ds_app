@@ -10,7 +10,7 @@ var snappedLine, thisId, isNew;
 var titleDom;
 var AllScores = [], csi = 0; //Current Score Index;
 var AllOptions = [];
-var Sounds = [];
+var Sounds = new Array(8);
 
 /*編集画面の初期化（ボタン/Stageの配置)*/
 require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-class","dojo/on","dojo/domReady!"],
@@ -250,12 +250,12 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
                                             stageY: hihatPos,
                                             context: AllScores[rowNo-1]
                                 });
-                                
+                                                                
                                 /*bassは1,5,6分で打つ*/
                                 if(i == 0 || i == 4 || i == 5){
                                     createNote({stageX: 76 + 21.3*i + 192*barNo, 
-                                            stageY: bassPos,
-                                            context: AllScores[rowNo-1]
+                                              stageY: bassPos,
+                                              context: AllScores[rowNo-1]
                                     });
                                 }
                                 
@@ -424,6 +424,7 @@ function edit(id, isnew){
     isNew = isnew
     libStage.enableMouseOver(0);//mouseoverを切る
     document.body.style.cursor = "";
+    createjs.Sound.setMute(false);
     init();
 }
 
@@ -504,6 +505,7 @@ function init(){
     
     createScore();
     createSavedScore();
+    
     //prepareSound();
     //loadRecordAnim();
 }
@@ -721,17 +723,19 @@ function createSavedNote(e){
 
 function prepareSound(){
     var preloader = new createjs.PreloadJS();
-    preloader.installPlugin(createjs.SoundJS);
+    
+    preloader.installPlugin(createjs.Sound);
+    createjs.Sound.setMute(true);
     preloader.onComplete = soundPrepared;
     
     var manifest = [
-        {src:"sounds/bass.wav", id:"bass"},
         {src:"sounds/crash.wav", id:"crash"},
-        {src:"sounds/floor.wav", id:"floor"},
         {src:"sounds/hihat1.wav", id:"hihat"},
-        {src:"sounds/ride1.wav", id:"ride"},
-        {src:"sounds/snare1.wav", id:"snare"},
         {src:"sounds/tom.wav", id:"tom"},
+        {src:"sounds/snare1.wav", id:"snare"},        
+        {src:"sounds/floor.wav", id:"floor"},
+        {src:"sounds/bass.wav", id:"bass"},
+        /*{src:"sounds/ride1.wav", id:"ride"},*/
         {src:"sounds/stick.wav", id:"stick"}
     ];
     
@@ -739,15 +743,15 @@ function prepareSound(){
 }
 
 function soundPrepared(e){
-    console.log(e);
-    Sounds[0] = createjs.SoundJS.play("crash");
-    Sounds[1] = createjs.SoundJS.play("hihat");
-    Sounds[2] = createjs.SoundJS.play("tom");
-    Sounds[3] = createjs.SoundJS.play("snare");
-    Sounds[4] = createjs.SoundJS.play("floor");
-    Sounds[5] = createjs.SoundJS.play("bass");
-    Sounds[6] = createjs.SoundJS.play("snare");
-    Sounds[7] = createjs.SoundJS.play("stick");
+    
+    Sounds[0] = createjs.Sound.play("crash");
+    Sounds[1] = createjs.Sound.play("hihat");
+    Sounds[2] = createjs.Sound.play("tom");
+    Sounds[3] = createjs.Sound.play("snare");
+    Sounds[4] = createjs.Sound.play("floor");
+    Sounds[5] = createjs.Sound.play("bass");
+    Sounds[6] = createjs.Sound.play("hihat");
+    Sounds[7] = createjs.Sound.play("stick");
     
     /*ここですべての準備が完了した　ローディングレイヤーを除去する*/
 }

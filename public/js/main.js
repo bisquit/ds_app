@@ -235,9 +235,10 @@ function(query,dom,baseFx,fx,easing,on,win,JSON){
                     }
                     
                     var libCircle = new createjs.Shape();
-                    //libCircle.graphics.setStrokeStyle(2).beginStroke("#a75");
-                    libCircle.graphics.beginFill("rgba(250,210,210,1)");
+                    libCircle.graphics.setStrokeStyle(2).beginStroke("#fff");
+                    libCircle.graphics.beginFill("#fffdbd");
                     libCircle.graphics.drawCircle(0,0,70);
+                    libCircle.alpha = 0.6;
                     libCircle.x = -35;
                     libCircle.y = -35;
                     libContainer.addChild(libCircle);
