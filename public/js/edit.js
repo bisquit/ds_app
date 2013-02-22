@@ -11,6 +11,7 @@ var titleDom;
 var AllScores = [], csi = 0; //Current Score Index;
 var AllOptions = [];
 var Sounds = new Array(8);
+var setButtonEvent;
 
 /*編集画面の初期化（ボタン/Stageの配置)*/
 require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-class","dojo/on","dojo/domReady!"],
@@ -29,150 +30,141 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
     });*/
     
     //init();
-    
-    var playBtn = dom.byId("btn_play"),
-        stopBtn = dom.byId("btn_stop");
-    
-    /*bpm 変更される度にグローバル変数bpmをリセット*/
-    var domBpm = dom.byId("bpmNumber");
-    on(domBpm,"change",function(){
-        bpm = domBpm.value;
-        if(bpm <= 0 || !bpm){
-            bpm = 120;
-            domBpm.value = 120;
-        }else if(bpm > 300){
-            bpm = 300;
-            domBpm.value = 300;
-        }
-    });    
+    setButtonEvent = function(){
+        var playBtn = dom.byId("btn_play"),
+            stopBtn = dom.byId("btn_stop");
         
-    
-    on(playBtn,"click",function(e){
-        /*bpmの取得・設定*/
-        /*var domBpm = dom.byId("bpmNumber");
-        bpm = domBpm.value;
-        if(bpm <= 0 || !bpm){
-            bpm = 120;
-            domBpm.value = 120;
-        }else if(bpm > 300){
-            bpm = 300;
-            domBpm.value = 300;
-        }*/
+        /*bpm 変更される度にグローバル変数bpmをリセット*/
+        var domBpm = dom.byId("bpmNumber");
+        on(domBpm,"change",function(){
+            bpm = domBpm.value;
+            if(bpm <= 0 || !bpm){
+                bpm = 120;
+                domBpm.value = 120;
+            }else if(bpm > 300){
+                bpm = 300;
+                domBpm.value = 300;
+            }
+        });    
+            
         
-        domClass.toggle(playBtn,"playing");
-        
-        saveNotes();
-        scrollHead();
-        
-        if(recoding){
-            handle.remove();
-            handle = null;
-            recoding = false;
-        }
-        
-    });
-    
-    on(stopBtn,"click",function(e){
-        
-        lineIndexes = {
-            0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0
-        };
-        
-        csi = 0;
-        playHead.x = 55;
-        playHead.y = 0;
-        
-        domClass.toggle(playBtn,"playing",false);
-        
-        if(playing)
+        on(playBtn,"click",function(e){
+            
+            domClass.toggle(playBtn,"playing");
+            
+            saveNotes();
             scrollHead();
             
-        if(recoding){
-            handle.remove();
-            handle = null;
-            recoding = false;
-        }
+            if(recoding){
+                handle.remove();
+                handle = null;
+                recoding = false;
+            }
+            
+        });
         
-        saveNotes();    
-        stage.update();
-    });
-    
-    on(dom.byId("btn_record"),"click",function(e){
-        
-        if(!handle && !playing){
-            /*count間の長さ(=delayの長さ)*/
-            var delay = 100/bpm * 710, count = 0;
-            /*countを鳴らす*/
-            var cid = setInterval(function(){
-                if(count >= 4)
-                    countEnded();
-                else{
-                    Sounds[7].play();
-                    count++;
-                }
-            },delay);
+        on(stopBtn,"click",function(e){
             
+            lineIndexes = {
+                0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0
+            };
             
+            csi = 0;
+            playHead.x = 55;
+            playHead.y = 0;
             
-            //setTimeout(function(){
-            function countEnded(){
+            domClass.toggle(playBtn,"playing",false);
+            
+            if(playing)
+                scrollHead();
                 
-                clearInterval(cid);
-                cid = null;
+            if(recoding){
+                handle.remove();
+                handle = null;
+                recoding = false;
+            }
+            
+            saveNotes();    
+            stage.update();
+        });
+        
+        on(dom.byId("btn_record"),"click",function(e){
+            
+            if(!handle && !playing){
+                /*count間の長さ(=delayの長さ)*/
+                var delay = 100/bpm * 710, count = 0;
+                /*countを鳴らす*/
+                var cid = setInterval(function(){
+                    if(count >= 4)
+                        countEnded();
+                    else{
+                        Sounds[7].play();
+                        count++;
+                    }
+                },delay);
+                
+                
+                
+                //setTimeout(function(){
+                function countEnded(){
+                    
+                    clearInterval(cid);
+                    cid = null;
+                    
+                    on.emit(playBtn,"click",e);
+                            
+                    handle = query("#drumset > span").on("click",function(e){
+                        var yPos;
+                        switch(e.target.id){
+                            case "snear_drum":
+                                yPos = rectContainer.getChildAt(4).y + 7.5;
+                                lineMaxIndex[csi][3]++;
+                                lineIndexes[3]++;
+                                Sounds[3].play();
+                                break;
+                            case "floor_drum":
+                                yPos = rectContainer.getChildAt(5).y + 7.5;
+                                Sounds[4].play();
+                                break;
+                            case "high_hut":
+                                yPos = rectContainer.getChildAt(2).y + 7.5;
+                                Sounds[1].play();
+                                break;
+                            case "high_tum":
+                            case "low_tum":
+                                yPos = rectContainer.getChildAt(3).y + 7.5;
+                                Sounds[2].play();
+                                break;
+                            case "bass_drum":
+                                yPos = rectContainer.getChildAt(6).y + 7.5;
+                                Sounds[5].play();
+                                break;
+                            case "simbul":
+                                yPos = rectContainer.getChildAt(1).y + 7.5;
+                                Sounds[0].play();
+                                break;
+                        }
+                        yPos += csi*120;
+                        createNote({stageX: playHead.x, 
+                                    stageY: yPos,
+                                    context: AllScores[csi]
+                        });/*switchここまで*/
+                    }); 
+                    
+                    recoding = true;
+                }
+                //},1000);/*setTimeoutここまで*/
+                
+            }else{
                 
                 on.emit(playBtn,"click",e);
-                        
-                handle = query("#drumset > span").on("click",function(e){
-                    var yPos;
-                    switch(e.target.id){
-                        case "snear_drum":
-                            yPos = rectContainer.getChildAt(4).y + 7.5;
-                            lineMaxIndex[csi][3]++;
-                            lineIndexes[3]++;
-                            Sounds[3].play();
-                            break;
-                        case "floor_drum":
-                            yPos = rectContainer.getChildAt(5).y + 7.5;
-                            Sounds[4].play();
-                            break;
-                        case "high_hut":
-                            yPos = rectContainer.getChildAt(2).y + 7.5;
-                            Sounds[1].play();
-                            break;
-                        case "high_tum":
-                        case "low_tum":
-                            yPos = rectContainer.getChildAt(3).y + 7.5;
-                            Sounds[2].play();
-                            break;
-                        case "bass_drum":
-                            yPos = rectContainer.getChildAt(6).y + 7.5;
-                            Sounds[5].play();
-                            break;
-                        case "simbul":
-                            yPos = rectContainer.getChildAt(1).y + 7.5;
-                            Sounds[0].play();
-                            break;
-                    }
-                    yPos += csi*120;
-                    createNote({stageX: playHead.x, 
-                                stageY: yPos,
-                                context: AllScores[csi]
-                    });/*switchここまで*/
-                }); 
                 
-                recoding = true;
-            }
-            //},1000);/*setTimeoutここまで*/
-            
-        }else{
-            
-            on.emit(playBtn,"click",e);
-            
-            /*handle.remove();
-            handle = null;
-            recoding = false;*/
-        }    
-    });
+                /*handle.remove();
+                handle = null;
+                recoding = false;*/
+            }    
+        });
+    };
     
     /*Titleテキスト*/
     
@@ -423,7 +415,7 @@ function edit(id, isnew){
     isNew = isnew
     libStage.enableMouseOver(0);//mouseoverを切る
     document.body.style.cursor = "";
-    createjs.Sound.setMute(false);
+    //createjs.Sound.setMute(false);
     init();
 }
 
@@ -722,6 +714,7 @@ function prepareSound(){
     
     preloader.installPlugin(createjs.Sound);
     createjs.Sound.setMute(true);
+    preloader.onProgress = soundProgress;
     preloader.onComplete = soundPrepared;
     
     var manifest = [
@@ -738,18 +731,43 @@ function prepareSound(){
     preloader.loadManifest(manifest);
 }
 
+function soundProgress(e){
+    console.log(e.loaded/e.total);
+}
+
 function soundPrepared(e){
     
-    Sounds[0] = createjs.Sound.play("crash");
-    Sounds[1] = createjs.Sound.play("hihat");
-    Sounds[2] = createjs.Sound.play("tom");
-    Sounds[3] = createjs.Sound.play("snare");
-    Sounds[4] = createjs.Sound.play("floor");
-    Sounds[5] = createjs.Sound.play("bass");
-    Sounds[6] = createjs.Sound.play("hihat");
-    Sounds[7] = createjs.Sound.play("stick");
+    require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
+      
+      var df = new Deferred();
+      df.then(function(){
+        setTimeout(function(){
+          createjs.Sound.setMute(false);
+          setButtonEvent();
+          /*loading_layerをはずす*/
+          dom.byId("loading_layer").style.display = "none";
+        },1500);
+      });
+      
+      Sounds[0] = createjs.Sound.play("crash");
+      Sounds[1] = createjs.Sound.play("hihat");
+      Sounds[2] = createjs.Sound.play("tom");
+      Sounds[3] = createjs.Sound.play("snare");
+      Sounds[4] = createjs.Sound.play("floor");
+      Sounds[5] = createjs.Sound.play("bass");
+      Sounds[6] = createjs.Sound.play("hihat");
+      Sounds[7] = createjs.Sound.play("stick");
+      
+      console.log(e.target.loaded);
+      var cid = setInterval(function(){
+          if(e.target.loaded){
+            clearInterval(cid);
+            df.resolve();
+          }
+      }, 500);
+      
     
-    /*ここですべての準備が完了した　ローディングレイヤーを除去する*/
+    });
 }
 
 /**/

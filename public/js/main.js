@@ -3,23 +3,26 @@ var currentView = "MYSCORES_LIBRARY";
 var isCanvasSupported = Modernizr.localstorage;
 
 var libStage, libCanvas;
-require(["dojo/query","dojo/dom","dojo/_base/fx","dojo/fx","dojo/fx/easing","dojo/on","dojo/window","dojo/json","dojo/domReady!"],
-function(query,dom,baseFx,fx,easing,on,win,JSON){   
+require(["dojo/query","dojo/dom","dojo/dom-class","dojo/_base/fx","dojo/fx","dojo/fx/easing","dojo/on","dojo/window","dojo/json","dojo/domReady!"],
+function(query,dom,domClass,baseFx,fx,easing,on,win,JSON){   
         
         /*画面サイズのRectangleを取得*/
         var windowRect = win.getBox(win.doc);
         var sectionMyScore = dom.byId("section_myScore");
         
         windowRect = win.getBox(win.doc);
-        sectionMyScore.style.height = windowRect.h - 74 - 100 + "px";
+        sectionMyScore.style.height = windowRect.h + "px";
         
     
         /*編集画面およびドラムセット・スニペットを右に隠す*/
         var sectionLib = dom.byId("section_library"),
             sectionEdit = dom.byId("section_edit"),
             drumContainer = dom.byId("drumset_container"),
-            snipet = dom.byId("snipet");
+            snipet = dom.byId("snipet"),
+            loading_layer = dom.byId("loading_layer");
         
+        loading_layer.style.width = "100%";    
+        loading_layer.style.height = "100%";
         sectionEdit.style.left = windowRect.w + "px";
         sectionEdit.style.opacity = 0;
         drumContainer.style.display = "none";
@@ -136,6 +139,7 @@ function(query,dom,baseFx,fx,easing,on,win,JSON){
                 
                 if(currentView != "MYSCORES_LIBRARY"){
                     saveNotes();//戻るボタンでもセーブされる;
+                    domClass.toggle(dom.byId("btn_play"),"playing",false); //"play"に戻しておく
                     goBackTransition();//画面遷移;
                     removeAllScores();//編集画面のキャンバスを真っ白にする;
                     getStorageAndUpdate();//ストレージを更新してライブラリ画面をリフレッシュする;

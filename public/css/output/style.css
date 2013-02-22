@@ -149,10 +149,20 @@ header div#help_nav ul li a:hover, header div#help_nav ul li a:active {
 section#content {
   width: 100%;
   min-width: 1000px;
-  min-height: 810px;
+  min-height: 610px;
   background-image: url("../../images/bg_main.png");
   background-size: cover;
+  position: relative;
 }
+
+div#loading_layer {
+  background: #000;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  z-index: 500;
+}
+
 /* line 95, ../scss/style.scss */
 section#content div#main_nav {
   position: relative;
