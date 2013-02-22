@@ -728,7 +728,7 @@ function prepareSound(){
         {src:"sounds/crash.wav", id:"crash"},
         {src:"sounds/hihat1.wav", id:"hihat"},
         {src:"sounds/tom.wav", id:"tom"},
-        {src:"sounds/snare1.mp3", id:"snare"},        
+        {src:"sounds/snare1.wav", id:"snare"},        
         {src:"sounds/floor.wav", id:"floor"},
         {src:"sounds/bass.wav", id:"bass"},
         /*{src:"sounds/ride1.wav", id:"ride"},*/
