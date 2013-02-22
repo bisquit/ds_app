@@ -536,6 +536,7 @@ function createScore(){
     for(i=0; i<7; i++){
         aScoreContainer.Notes[i] = [];
         /*ついでにlineMaxIndexも二次元配列にしとく*/
+
     }
     /*各コンテナに固有の四角領域*/
     aScoreContainer.Rects = [];
@@ -846,8 +847,10 @@ function removeScore(targetScore){
         var id = targetScore.target.id.slice(6),
             max = AllScores.length;
         
-        lineMaxIndex[lmi--] = null;
-        
+        //lineMaxIndex[lmi--] = null;
+        lineMaxIndex.splice(id-1, 1);
+        lmi--;
+          
         if(max <= 1)
             return;
         
