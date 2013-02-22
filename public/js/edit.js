@@ -713,16 +713,10 @@ function createSavedNote(e){
 }
 
 function prepareSound(){
-    //var preloader = new createjs.PreloadJS();
     var queue = new createjs.LoadQueue(true);
     queue.addEventListener("complete", soundLoaded);
-    
     queue.installPlugin(createjs.Sound);
-    //preloader.installPlugin(createjs.Sound);
-   // createjs.Sound.setMute(true);
-    
-    //preloader.onProgress = soundProgress;
-    //preloader.onComplete = soundPrepared;
+    createjs.Sound.setMute(true);
     
     var manifest = [
         {src:"sounds/crash.wav", id:"crash"},
@@ -734,7 +728,6 @@ function prepareSound(){
         /*{src:"sounds/ride1.wav", id:"ride"},*/
         {src:"sounds/stick.wav", id:"stick"}
     ];
-    //preloader.loadManifest(manifest);
     queue.loadManifest(manifest);
 }
 
@@ -767,14 +760,7 @@ function soundLoaded(e){
             df.resolve();
           }
       }, 500);
-      
-    
     });
-}
-
-
-function soundProgress(e){
-    console.log(e.loaded/e.total);
 }
 
 function soundPrepared(e){
@@ -865,13 +851,9 @@ function removeScore(targetScore){
         AllScores.splice(id-1,1);
         
         /*plus/minusボタンの削除*/
-        /*var optionsList = query(".option_area");
-        domConst.destroy(optionsList[id-1]);
-        AllOptions.splice(id-1,1);
         var optionsList = query(".option_area");
         domConst.destroy(optionsList[AllOptions.length-1]);
         AllOptions.splice(AllOptions.length-1,1);
-        console.log(AllOptions);
         
         AllScores.sort(function(a,b){
             return a.y - b.y;
