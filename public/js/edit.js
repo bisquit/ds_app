@@ -466,20 +466,22 @@ function init(){
             playHead.x += 22;
         }
         
-        for(var i=AllScores[csi].Notes.length-1; i>=0; i--){
-            var notes = AllScores[csi].Notes;
-            for(var m=notes.length-1; m>=0; m--){
-                if(lineMaxIndex[csi][i] > lineIndexes[i]){
-                    if(playHead.x-1 == notes[i][lineIndexes[i]].x ||
-                        playHead.x == notes[i][lineIndexes[i]].x ||
-                        playHead.x+1 == notes[i][lineIndexes[i]].x){
-                        /*Soundを鳴らす*/
-                        Sounds[i].play();
-                        console.log("sound");
-                        lineIndexes[i]++;
-                    }
-                }
-            }
+        if(AllScores[csi].Notes){
+          for(var i=AllScores[csi].Notes.length-1; i>=0; i--){
+              var notes = AllScores[csi].Notes;
+              for(var m=notes.length-1; m>=0; m--){
+                  if(lineMaxIndex[csi][i] > lineIndexes[i]){
+                      if(playHead.x-1 == notes[i][lineIndexes[i]].x ||
+                          playHead.x == notes[i][lineIndexes[i]].x ||
+                          playHead.x+1 == notes[i][lineIndexes[i]].x){
+                          /*Soundを鳴らす*/
+                          Sounds[i].play();
+                          console.log("sound");
+                          lineIndexes[i]++;
+                      }
+                  }
+              }
+          }
         }
         
         if(playHead.x > 810){
@@ -540,9 +542,13 @@ function createScore(){
     /*各コンテナに固有の分割線*/
     aScoreContainer.Lines = [];
     
-    var scoreImg = new Image();
-    scoreImg.onload = imageLoaded;
-    scoreImg.src = "images/a_score.png";
+    if(scoreImg){
+        imageLoaded();
+    }else{
+        var scoreImg = new Image();
+        scoreImg.onload = imageLoaded;
+        scoreImg.src = "images/a_score.png";
+    }
 
     function imageLoaded(){
         var scoreBM = new createjs.Bitmap(scoreImg);
