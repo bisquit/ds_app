@@ -475,6 +475,7 @@ function init(){
                         playHead.x+1 == notes[i][lineIndexes[i]].x){
                         /*Soundを鳴らす*/
                         Sounds[i].play();
+                        console.log("sound");
                         lineIndexes[i]++;
                     }
                 }
@@ -725,9 +726,9 @@ function prepareSound(){
         {src:"sounds/tom.wav", id:"tom"},
         {src:"sounds/snare1.wav", id:"snare"},        
         {src:"sounds/floor.wav", id:"floor"},
-        {src:"sounds/bass.wav", id:"bass"},
+        {src:"../sounds/bass.wav", id:"bass"},
         /*{src:"sounds/ride1.wav", id:"ride"},*/
-        {src:"sounds/stick.wav", id:"stick"}
+        {src:"../sounds/stick.wav", id:"stick"}
     ];
     
     preloader.loadManifest(manifest);
