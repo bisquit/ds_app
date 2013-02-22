@@ -724,11 +724,11 @@ function prepareSound(){
         {src:"sounds/crash.wav", id:"crash"},
         {src:"sounds/hihat1.wav", id:"hihat"},
         {src:"sounds/tom.wav", id:"tom"},
-        {src:"sounds/snare1.wav", id:"snare"},        
+        {src:"sounds/snare1.mp3", id:"snare"},        
         {src:"sounds/floor.wav", id:"floor"},
-        {src:"../sounds/bass.wav", id:"bass"},
+        {src:"sounds/bass.wav", id:"bass"},
         /*{src:"sounds/ride1.wav", id:"ride"},*/
-        {src:"../sounds/stick.wav", id:"stick"}
+        {src:"sounds/stick.wav", id:"stick"}
     ];
     
     preloader.loadManifest(manifest);
@@ -747,6 +747,7 @@ function soundPrepared(e){
         setTimeout(function(){
           createjs.Sound.setMute(false);
           setButtonEvent();
+          console.log(Sounds);
           /*loading_layerをはずす*/
           dom.byId("loading_layer").style.display = "none";
         },1500);
