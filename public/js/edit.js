@@ -713,12 +713,16 @@ function createSavedNote(e){
 }
 
 function prepareSound(){
-    var preloader = new createjs.PreloadJS();
+    //var preloader = new createjs.PreloadJS();
+    var queue = new createjs.LoadQueue(true);
+    queue.addEventListener("complete", soundLoaded);
     
-    preloader.installPlugin(createjs.Sound);
-    createjs.Sound.setMute(true);
-    preloader.onProgress = soundProgress;
-    preloader.onComplete = soundPrepared;
+    queue.installPlugin(createjs.Sound);
+    //preloader.installPlugin(createjs.Sound);
+   // createjs.Sound.setMute(true);
+    
+    //preloader.onProgress = soundProgress;
+    //preloader.onComplete = soundPrepared;
     
     var manifest = [
         {src:"sounds/crash.wav", id:"crash"},
@@ -730,9 +734,44 @@ function prepareSound(){
         /*{src:"sounds/ride1.wav", id:"ride"},*/
         {src:"sounds/stick.wav", id:"stick"}
     ];
-    
-    preloader.loadManifest(manifest);
+    //preloader.loadManifest(manifest);
+    queue.loadManifest(manifest);
 }
+
+function soundLoaded(e){
+    require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
+      
+      var df = new Deferred();
+      df.then(function(){
+        setTimeout(function(){
+          createjs.Sound.setMute(false);
+          setButtonEvent();
+          console.log(Sounds);
+          /*loading_layerをはずす*/
+          dom.byId("loading_layer").style.display = "none";
+        },1500);
+      });
+      
+      Sounds[0] = createjs.Sound.play("crash");
+      Sounds[1] = createjs.Sound.play("hihat");
+      Sounds[2] = createjs.Sound.play("tom");
+      Sounds[3] = createjs.Sound.play("snare");
+      Sounds[4] = createjs.Sound.play("floor");
+      Sounds[5] = createjs.Sound.play("bass");
+      Sounds[6] = createjs.Sound.play("hihat");
+      Sounds[7] = createjs.Sound.play("stick");
+      
+      var cid = setInterval(function(){
+          if(e.target.loaded){
+            clearInterval(cid);
+            df.resolve();
+          }
+      }, 500);
+      
+    
+    });
+}
+
 
 function soundProgress(e){
     console.log(e.loaded/e.total);
