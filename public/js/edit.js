@@ -30,9 +30,11 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
     });*/
     
     //init();
-    setButtonEvent = function(){
-        var playBtn = dom.byId("btn_play"),
+    
+    var playBtn = dom.byId("btn_play"),
             stopBtn = dom.byId("btn_stop");
+        
+    setButtonEvent = function(){
         
         /*bpm 変更される度にグローバル変数bpmをリセット*/
         var domBpm = dom.byId("bpmNumber");
