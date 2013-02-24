@@ -375,6 +375,31 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
                                     });
                                 }
                                 break;
+                            case "metal":
+                                /*hihatは偶数分で打つ*/
+                                if(i % 2 != 0){
+                                    createNote({stageX: 76 + 21.3*i + 192*barNo, 
+                                            stageY: hihatPos,
+                                            context: AllScores[rowNo-1]
+                                    });
+                                }
+                                /*bassは16分で打つ*/
+                                createNote({stageX: 76 + 21.3*i + 192*barNo, 
+                                        stageY: bassPos,
+                                        context: AllScores[rowNo-1]
+                                });
+                                createNote({stageX: 76 + 21.3*i + 10.7 + + 192*barNo, 
+                                        stageY: bassPos,
+                                        context: AllScores[rowNo-1]
+                                });
+                                /*snareは3,7分で打つ*/
+                                if(i == 2 || i == 6){
+                                    createNote({stageX: 76 + 21.3*i + 192*barNo, 
+                                            stageY: snarePos,
+                                            context: AllScores[rowNo-1]
+                                    });
+                                }
+                                break;
                         }
                     }
                 
@@ -749,7 +774,7 @@ function soundLoaded(e){
           console.log(Sounds);
           /*loading_layerをはずす*/
           dom.byId("loading_layer").style.display = "none";
-        },1500);
+        },2000);
       });
       
       Sounds[0] = createjs.Sound.play("crash");
@@ -763,8 +788,9 @@ function soundLoaded(e){
       
       var cid = setInterval(function(){
           if(e.target.loaded){
-            clearInterval(cid);
+            
             df.resolve();
+            clearInterval(cid);
           }
       }, 500);
     });
@@ -1117,7 +1143,7 @@ function saveNotes(){
             if(!(typeof Scores == "object"))
                 Scores = JSON.parse(Scores);
             var date = new Date(),
-                dateStr = date.getFullYear()+"/"+date.getMonth()+1+"/"+
+                dateStr = date.getFullYear()+"/"+parseInt(date.getMonth())+1+"/"+
                 date.getDate()+"\n"+date.getHours()+":"+date.getMinutes();
             /*info(配列の1番目)の更新*/
             storingNote.splice(0,1,{name:titleDom.value,date:dateStr,id:thisId,i:lineMaxIndex});
