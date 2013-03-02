@@ -55,8 +55,6 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
             
             domClass.toggle(playBtn,"playing");
             
-            createjs.Sound.setMute(false);
-            
             saveNotes();
             scrollHead();
             
@@ -103,7 +101,10 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
                     if(count >= 4)
                         countEnded();
                     else{
-                        Sounds[7].play();
+                        if(Sounds[7])
+                          Sounds[7].play();
+                        else
+                          Sounds[7] = createjs.Sound.play("7");
                         count++;
                     }
                 },delay);
