@@ -29,8 +29,6 @@ function(query,dom,domClass,baseFx,fx,easing,on,win,JSON){
         drumContainer.style.opacity = 0;
         snipet.style.opacity = 0;
         
-        createjs.Sound.setMute(true);
-        createjs.Sound.setVolume(0);
         prepareSound();
         
         /*canvas及びlocalstorageのサポートで分岐*/

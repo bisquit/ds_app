@@ -512,7 +512,12 @@ function init(){
                           playHead.x == notes[i][lineIndexes[i]].x ||
                           playHead.x+1 == notes[i][lineIndexes[i]].x){
                           /*Soundを鳴らす*/
-                          Sounds[i].play();
+                          if(Sounds[i]){
+                            Sounds[i].play(); 
+                          }else{
+                            Sounds[i] = createjs.Sound.play(i.toString());
+                            console.log("set");
+                          }
                           console.log("sound");
                           lineIndexes[i]++;
                       }
@@ -762,7 +767,7 @@ function prepareSound(){
     //createjs.Sound.setVolume(0);
     queue.addEventListener("complete", soundPrepared);
     queue.installPlugin(createjs.Sound);
-    
+    /*
     var manifest = [
         {src:"sounds/crash.wav", id:"crash"},
         {src:"sounds/hihat1.wav", id:"hihat"},
@@ -770,8 +775,17 @@ function prepareSound(){
         {src:"sounds/snare1.wav", id:"snare"},        
         {src:"sounds/floor.wav", id:"floor"},
         {src:"sounds/bass.wav", id:"bass"},
-        /*{src:"sounds/ride1.wav", id:"ride"},*/
         {src:"sounds/stick.wav", id:"stick"}
+    ];*/
+    var manifest = [
+        {src:"sounds/crash.wav", id:"0"},
+        {src:"sounds/hihat1.wav", id:"1"},
+        {src:"sounds/tom.wav", id:"2"},
+        {src:"sounds/snare1.wav", id:"3"},        
+        {src:"sounds/floor.wav", id:"4"},
+        {src:"sounds/bass.wav", id:"5"},
+        {src:"sounds/hihat1.wav", id:"6"},
+        {src:"sounds/stick.wav", id:"7"}
     ];
     queue.loadManifest(manifest);
 }
@@ -831,7 +845,7 @@ function soundPrepared(e){
           }
       }).play();
       
-      Sounds[0] = createjs.Sound.play("crash");
+      /*Sounds[0] = createjs.Sound.play("crash");
       Sounds[1] = createjs.Sound.play("hihat");
       Sounds[2] = createjs.Sound.play("tom");
       Sounds[3] = createjs.Sound.play("snare");
@@ -839,7 +853,7 @@ function soundPrepared(e){
       Sounds[5] = createjs.Sound.play("bass");
       Sounds[6] = createjs.Sound.play("hihat");
       Sounds[7] = createjs.Sound.play("stick");
-
+*/
     });
 }
 
