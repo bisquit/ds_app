@@ -455,7 +455,6 @@ function edit(id, isnew){
     isNew = isnew
     libStage.enableMouseOver(0);//mouseoverを切る
     document.body.style.cursor = "";
-    //createjs.Sound.setMute(false);
     init();
 }
 
@@ -759,9 +758,9 @@ function createSavedNote(e){
 
 function prepareSound(){
     var queue = new createjs.LoadQueue(true);
+    createjs.Sound.setMute(true);
     queue.addEventListener("complete", soundPrepared);
     queue.installPlugin(createjs.Sound);
-    createjs.Sound.setMute(true);
     
     var manifest = [
         {src:"sounds/crash.wav", id:"crash"},
@@ -815,7 +814,6 @@ function soundPrepared(e){
     
     require(["dojo/dom","dojo/_base/fx","dojo/fx/easing"], function(dom, baseFx, easing){
       
-      //createjs.Sound.setMute(false);
       setButtonEvent();
       
       //loading_layerをはずす
