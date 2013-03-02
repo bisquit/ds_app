@@ -843,15 +843,13 @@ function soundPrepared(e){
       
     
     });*/
-     require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
+    require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
       
-     
-          //createjs.Sound.setMute(false);
-          setButtonEvent();
-          
-          //loading_layerをはずす
-          dom.byId("loading_layer").style.display = "none";
-        
+      //createjs.Sound.setMute(false);
+      setButtonEvent();
+      
+      //loading_layerをはずす
+      dom.byId("loading_layer").style.display = "none";
       
       Sounds[0] = createjs.Sound.play("crash");
       Sounds[1] = createjs.Sound.play("hihat");
@@ -861,8 +859,7 @@ function soundPrepared(e){
       Sounds[5] = createjs.Sound.play("bass");
       Sounds[6] = createjs.Sound.play("hihat");
       Sounds[7] = createjs.Sound.play("stick");
-      
-     
+
     });
 }
 
