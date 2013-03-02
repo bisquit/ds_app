@@ -54,6 +54,8 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
             
             domClass.toggle(playBtn,"playing");
             
+            createjs.Sound.setMute(false);
+            
             saveNotes();
             scrollHead();
             
@@ -126,23 +128,33 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
                                 break;
                             case "floor_drum":
                                 yPos = rectContainer.getChildAt(5).y + 7.5;
+                                lineMaxIndex[csi][4]++;
+                                lineIndexes[4]++;
                                 Sounds[4].play();
                                 break;
                             case "high_hut":
                                 yPos = rectContainer.getChildAt(2).y + 7.5;
+                                lineMaxIndex[csi][1]++;
+                                lineIndexes[1]++;
                                 Sounds[1].play();
                                 break;
                             case "high_tum":
                             case "low_tum":
                                 yPos = rectContainer.getChildAt(3).y + 7.5;
+                                lineMaxIndex[csi][2]++;
+                                lineIndexes[2]++;
                                 Sounds[2].play();
                                 break;
                             case "bass_drum":
                                 yPos = rectContainer.getChildAt(6).y + 7.5;
+                                lineMaxIndex[csi][5]++;
+                                lineIndexes[5]++;
                                 Sounds[5].play();
                                 break;
                             case "simbul":
                                 yPos = rectContainer.getChildAt(1).y + 7.5;
+                                lineMaxIndex[csi][0]++;
+                                lineIndexes[0]++;
                                 Sounds[0].play();
                                 break;
                         }
@@ -787,6 +799,7 @@ function soundLoaded(e){
       Sounds[7] = createjs.Sound.play("stick");
       
       var cid = setInterval(function(){
+          console.log(e.target.loaded);
           if(e.target.loaded){
             
             df.resolve();
@@ -797,7 +810,7 @@ function soundLoaded(e){
 }
 
 function soundPrepared(e){
-    
+    /*
     require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
       
       var df = new Deferred();
@@ -806,7 +819,7 @@ function soundPrepared(e){
           createjs.Sound.setMute(false);
           setButtonEvent();
           console.log(Sounds);
-          /*loading_layerをはずす*/
+          //loading_layerをはずす
           dom.byId("loading_layer").style.display = "none";
         },1500);
       });
@@ -829,6 +842,27 @@ function soundPrepared(e){
       }, 500);
       
     
+    });*/
+     require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
+      
+     
+          //createjs.Sound.setMute(false);
+          setButtonEvent();
+          
+          //loading_layerをはずす
+          dom.byId("loading_layer").style.display = "none";
+        
+      
+      Sounds[0] = createjs.Sound.play("crash");
+      Sounds[1] = createjs.Sound.play("hihat");
+      Sounds[2] = createjs.Sound.play("tom");
+      Sounds[3] = createjs.Sound.play("snare");
+      Sounds[4] = createjs.Sound.play("floor");
+      Sounds[5] = createjs.Sound.play("bass");
+      Sounds[6] = createjs.Sound.play("hihat");
+      Sounds[7] = createjs.Sound.play("stick");
+      
+     
     });
 }
 
