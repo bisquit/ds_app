@@ -2,6 +2,7 @@
  *Scoreの追加・音符の描画・データの保存を行う
 */
 
+/*変数　とりあえずは即時で包まずにグローバルにしておく*/
 var stage, canvas;
 var SoundManager = {}, playing = false, recoding = false, handle;
 var bpm = 120, lineMaxIndex = [], lmi = 0, lineIndexes;//lineMaxIndexのindex
@@ -758,7 +759,7 @@ function createSavedNote(e){
 
 function prepareSound(){
     var queue = new createjs.LoadQueue(true);
-    queue.addEventListener("complete", soundLoaded);
+    queue.addEventListener("complete", soundPrepared);
     queue.installPlugin(createjs.Sound);
     createjs.Sound.setMute(true);
     
@@ -774,7 +775,7 @@ function prepareSound(){
     ];
     queue.loadManifest(manifest);
 }
-
+/* Defferdを使ったバージョン
 function soundLoaded(e){
     require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
       
@@ -784,7 +785,7 @@ function soundLoaded(e){
           createjs.Sound.setMute(false);
           setButtonEvent();
           console.log(Sounds);
-          /*loading_layerをはずす*/
+          
           dom.byId("loading_layer").style.display = "none";
         },2000);
       });
@@ -807,49 +808,29 @@ function soundLoaded(e){
           }
       }, 500);
     });
-}
+}*/
 
+/*Defferdなしのバージョン*/
 function soundPrepared(e){
-    /*
-    require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
-      
-      var df = new Deferred();
-      df.then(function(){
-        setTimeout(function(){
-          createjs.Sound.setMute(false);
-          setButtonEvent();
-          console.log(Sounds);
-          //loading_layerをはずす
-          dom.byId("loading_layer").style.display = "none";
-        },1500);
-      });
-      
-      Sounds[0] = createjs.Sound.play("crash");
-      Sounds[1] = createjs.Sound.play("hihat");
-      Sounds[2] = createjs.Sound.play("tom");
-      Sounds[3] = createjs.Sound.play("snare");
-      Sounds[4] = createjs.Sound.play("floor");
-      Sounds[5] = createjs.Sound.play("bass");
-      Sounds[6] = createjs.Sound.play("hihat");
-      Sounds[7] = createjs.Sound.play("stick");
-      
-      console.log(e.target.loaded);
-      var cid = setInterval(function(){
-          if(e.target.loaded){
-            clearInterval(cid);
-            df.resolve();
-          }
-      }, 500);
-      
     
-    });*/
-    require(["dojo/Deferred","dojo/dom"], function(Deferred,dom){
+    require(["dojo/dom","dojo/_base/fx","dojo/fx/easing"], function(dom, baseFx, easing){
       
       //createjs.Sound.setMute(false);
       setButtonEvent();
       
       //loading_layerをはずす
-      dom.byId("loading_layer").style.display = "none";
+      var loading_layer = dom.byId("loading_layer");
+      baseFx.animateProperty({
+          easing: easing.sinOut,
+          duration: 300,
+          node: loading_layer,
+          properties: {
+              opacity: 0
+          },
+          onEnd: function(){
+            loading_layer.style.display = "none";
+          }
+      }).play();
       
       Sounds[0] = createjs.Sound.play("crash");
       Sounds[1] = createjs.Sound.play("hihat");
@@ -1153,8 +1134,12 @@ function saveNotes(){
                         storingNote.push({x:theNote.x, y:theNote.y, ctx:s});
                     }
                 }
-                
-                lineMaxIndex[s][n] = AllScores[s].Notes[n].length;
+                try{
+                  lineMaxIndex[s][n] = AllScores[s].Notes[n].length;
+                }catch(error){
+                  console.log(error);
+                  return;
+                }
             }
         }
         

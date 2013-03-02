@@ -156,7 +156,10 @@ section#content {
 }
 
 div#loading_layer {
-  background: #000;
+  background-color: #000;
+  background-image: url("../../images/loading2.gif");
+  background-position: center 200px;
+  background-repeat: no-repeat;
   opacity: 0.6;
   position: absolute;
   top: 0;
