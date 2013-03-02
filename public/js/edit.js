@@ -126,38 +126,62 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
                                 yPos = rectContainer.getChildAt(4).y + 7.5;
                                 lineMaxIndex[csi][3]++;
                                 lineIndexes[3]++;
-                                Sounds[3].play();
+                                if(Sounds[3]){
+                                  Sounds[3].play(); 
+                                }else{
+                                  Sounds[3] = createjs.Sound.play("3");
+                                }
                                 break;
                             case "floor_drum":
                                 yPos = rectContainer.getChildAt(5).y + 7.5;
                                 lineMaxIndex[csi][4]++;
                                 lineIndexes[4]++;
-                                Sounds[4].play();
+                                if(Sounds[4]){
+                                  Sounds[4].play(); 
+                                }else{
+                                  Sounds[4] = createjs.Sound.play("4");
+                                }
                                 break;
                             case "high_hut":
                                 yPos = rectContainer.getChildAt(2).y + 7.5;
                                 lineMaxIndex[csi][1]++;
                                 lineIndexes[1]++;
-                                Sounds[1].play();
+                                if(Sounds[1]){
+                                  Sounds[1].play(); 
+                                }else{
+                                  Sounds[1] = createjs.Sound.play("1");
+                                }
                                 break;
                             case "high_tum":
                             case "low_tum":
                                 yPos = rectContainer.getChildAt(3).y + 7.5;
                                 lineMaxIndex[csi][2]++;
                                 lineIndexes[2]++;
-                                Sounds[2].play();
+                                if(Sounds[2]){
+                                  Sounds[2].play(); 
+                                }else{
+                                  Sounds[2] = createjs.Sound.play("2");
+                                }
                                 break;
                             case "bass_drum":
                                 yPos = rectContainer.getChildAt(6).y + 7.5;
                                 lineMaxIndex[csi][5]++;
                                 lineIndexes[5]++;
-                                Sounds[5].play();
+                                if(Sounds[5]){
+                                  Sounds[5].play(); 
+                                }else{
+                                  Sounds[5] = createjs.Sound.play("5");
+                                }
                                 break;
                             case "simbul":
                                 yPos = rectContainer.getChildAt(1).y + 7.5;
                                 lineMaxIndex[csi][0]++;
                                 lineIndexes[0]++;
-                                Sounds[0].play();
+                                if(Sounds[0]){
+                                  Sounds[0].play(); 
+                                }else{
+                                  Sounds[0] = createjs.Sound.play("0");
+                                }
                                 break;
                         }
                         yPos += csi*120;
@@ -517,7 +541,6 @@ function init(){
                             Sounds[i].play(); 
                           }else{
                             Sounds[i] = createjs.Sound.play(i.toString());
-                            console.log("set");
                           }
                           console.log("sound");
                           lineIndexes[i]++;
