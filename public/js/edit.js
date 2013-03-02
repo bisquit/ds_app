@@ -759,6 +759,7 @@ function createSavedNote(e){
 function prepareSound(){
     var queue = new createjs.LoadQueue(true);
     createjs.Sound.setMute(true);
+    createjs.Sound.setVolume(0);
     queue.addEventListener("complete", soundPrepared);
     queue.installPlugin(createjs.Sound);
     
