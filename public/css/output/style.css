@@ -396,7 +396,7 @@ div#section_myScore div#section_edit div#snipet div#row_check h3 {
 div#section_myScore div#section_edit div#snipet div#commands {
   width: 180px;
   height: 220px;
-  margin-top: 5px;
+  margin-top: 15px;
   float: left;
 }
 /* line 311, ../scss/style.scss */
@@ -430,6 +430,7 @@ div#section_myScore div#section_edit div#drumset_container span#btn_record {
   height: 134px;
   background-image: url("../../images/btn_record.png");
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 /* line 344, ../scss/style.scss */
 div#section_myScore div#section_edit div#drumset_container div#drumset {
@@ -455,6 +456,7 @@ div#section_myScore div#section_edit div#drumset_container div#drumset #bass_dru
   background-image: url("../../images/drum_bass.png");
   background-repeat: no-repeat;
   background-size: cover;
+  cursor: crosshair;
 }
 /* line 366, ../scss/style.scss */
 div#section_myScore div#section_edit div#drumset_container div#drumset .drum {
@@ -463,6 +465,7 @@ div#section_myScore div#section_edit div#drumset_container div#drumset .drum {
   background-repeat: no-repeat;
   background-size: 112% 112%;
   background-position: center center;
+  cursor: crosshair;
 }
 /* line 373, ../scss/style.scss */
 div#section_myScore div#section_edit div#drumset_container div#drumset #floor_drum {

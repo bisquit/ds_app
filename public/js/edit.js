@@ -108,9 +108,7 @@ require(["dojo/query","dojo/dom-construct","dojo/dom","dojo/dom-attr","dojo/dom-
                         count++;
                     }
                 },delay);
-                
-                
-                
+                                
                 //setTimeout(function(){
                 function countEnded(){
                     
@@ -1196,8 +1194,8 @@ function saveNotes(){
             if(!(typeof Scores == "object"))
                 Scores = JSON.parse(Scores);
             var date = new Date(),
-                dateStr = date.getFullYear()+"/"+parseInt(date.getMonth())+1+"/"+
-                date.getDate()+"\n"+date.getHours()+":"+date.getMinutes();
+                intMonth = +date.getMonth(),
+                dateStr = date.getFullYear()+"/"+(intMonth+1)+"/"+date.getDate()+"\n"+date.getHours()+":"+date.getMinutes();
             /*info(配列の1番目)の更新*/
             storingNote.splice(0,1,{name:titleDom.value,date:dateStr,id:thisId,i:lineMaxIndex});
             /*idからScoresの何番目にあるのかを探索*/
