@@ -3,8 +3,13 @@ var currentView = "MYSCORES_LIBRARY";
 var isCanvasSupported = Modernizr.localstorage;
 
 var libStage, libCanvas;
-require(["dojo/query","dojo/dom","dojo/dom-class","dojo/_base/fx","dojo/fx","dojo/fx/easing","dojo/on","dojo/window","dojo/json","dojo/domReady!"],
-function(query,dom,domClass,baseFx,fx,easing,on,win,JSON){   
+require(["dojo/query","dojo/dom","dojo/dom-class","dojo/_base/fx","dojo/fx","dojo/fx/easing","dojo/on","dojo/window","dojo/json","dojo/has","dojo/domReady!"],
+function(query,dom,domClass,baseFx,fx,easing,on,win,JSON,has){   
+        
+        /*ブラウザ判定*/
+        if(has("chrome")){
+        }else
+          alert("お使いのブラウザだと正しく動作しません\nGoogle Chromeをご利用ください");
         
         /*画面サイズのRectangleを取得*/
         var windowRect = win.getBox(win.doc);
