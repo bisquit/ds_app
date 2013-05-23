@@ -2,7 +2,8 @@
  *Scoreの追加・音符の描画・データの保存を行う
 */
 
-/*変数　とりあえずは即時で包まずにグローバルにしておく*/
+    
+/*変数　とりあえずは即時で包まずにグローバルにしてます、とりあえず*/
 var stage, canvas;
 var SoundManager = {}, playing = false, recoding = false, handle;
 var bpm = 120, lineMaxIndex = [], lmi = 0, lineIndexes;//lineMaxIndexのindex
